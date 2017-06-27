@@ -34,6 +34,7 @@ fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')
 # 出力先のファイルを開く
 out = cv2.VideoWriter(Output_DATA, int(fourcc), fps, (int(width), int(height)))
 
+
 # 最初のフレームの読み込み
 end_flag, frame_next = video.read()
 height, width, channels = frame_next.shape
