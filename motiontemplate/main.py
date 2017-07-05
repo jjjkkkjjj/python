@@ -4,9 +4,9 @@ import cv2
 import numpy as np
 
 # ビデオデータ
-VIDEO_DATA = "/Users/j_kado/Desktop/C0001.MP4"
+VIDEO_DATA = "/Users/junkadonosuke/Desktop/C0001.MP4"
 # 書き込みデータ
-Output_DATA= "/Users/j_kado/Desktop/C0001_motem.m4v"
+Output_DATA= "/Users/junkadonosuke/Desktop/C0001_motem.avi"
 # Esc キー
 ESC_KEY = 0x1b
 # モーションの残存期間(sec)
@@ -29,7 +29,7 @@ video = cv2.VideoCapture(VIDEO_DATA)
 fps=video.get(cv2.CAP_PROP_FPS)
 height = video.get(cv2.CAP_PROP_FRAME_HEIGHT)
 width = video.get(cv2.CAP_PROP_FRAME_WIDTH)
-fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')
+fourcc = cv2.VideoWriter_fourcc(*'XVID')
 
 # 出力先のファイルを開く
 out = cv2.VideoWriter(Output_DATA, int(fourcc), fps, (int(width), int(height)))
