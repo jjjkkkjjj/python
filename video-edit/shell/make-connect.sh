@@ -12,15 +12,15 @@ FILEPATH=${HOME}/Desktop/Hisamitsu/${PLAYER}
 cd ${FILEPATH}
 EDITFILE=./EDIT_CONNECT.txt
 fileary=()
-while read line
+for i in $(cat ${EDITFILE})
 do
-	fileary+=("$line")
-done < $EDITFILE
+    fileary+=("$i")
+done
 
 mkdir output
 
 cd
-cd Desktop/ubuntu_project/caffe_project/openpose_modoki/video-edit/
+cd Desktop/project/python/video-edit/
 
 for i in `seq ${#fileary[*]}`
 do

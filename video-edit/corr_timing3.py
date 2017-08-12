@@ -9,8 +9,8 @@ def corr_timing(video_name):
     # output_path = ['../data/video/%s' % video_name[i + 3] for i in range(video_num)]
 
     # hisamitsu
-    video_path = ['../../../../Hisamitsu/%s' % video_name[i + 1] for i in range(video_num)]
-    output_path = ['../../../../Hisamitsu/%s' % video_name[i + 4] for i in range(video_num)]
+    video_path = ['../../../Hisamitsu/%s' % video_name[i + 1] for i in range(video_num)]
+    output_path = ['../../../Hisamitsu/%s' % video_name[i + 4] for i in range(video_num)]
 
     # initialization
     movie = [cv.VideoCapture(video_path[i]) for i in range(video_num)]

@@ -8,7 +8,7 @@ def connect_video(output_path, video):
     # video_path = ['../data/video/%s' % video[i + 2] for i in range(video_num)]
 
     # hisamitsu
-    video_path = ['../../../../Hisamitsu/%s' % video[i + 2] for i in range(video_num)]
+    video_path = ['../../../Hisamitsu/%s' % video[i + 2] for i in range(video_num)]
 
     # initialization
     movie = [cv.VideoCapture(video_path[i]) for i in range(video_num)]
@@ -25,7 +25,7 @@ def connect_video(output_path, video):
     width = 1280
 
     fourcc = cv.VideoWriter_fourcc(*'MPEG')
-    out = cv.VideoWriter(output_path, fourcc, frame_rate, (width, height))
+    out = cv.VideoWriter(output_path, int(fourcc), frame_rate, (width, height))
 
     div = int((video_num + 1)/2)
     tmp = 0

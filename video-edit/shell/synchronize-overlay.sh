@@ -13,16 +13,16 @@ fileary=()
 cd ${FILEPATH}
 EDITFILE=./EDIT_OVERLAY.txt
 fileary=()
-while read line
+for i in $(cat ${EDITFILE})
 do
-	fileary+=("$line")
-done < $EDITFILE
+    fileary+=("$i")
+done
 
 mkdir after_synchronized_overlay
 VIDEO=${PLAYER}/after_synchronized_overlay
 
 cd
-cd Desktop/ubuntu_project/caffe_project/openpose_modoki/video-edit/
+cd Desktop/project/python/video-edit/
 
 for i in `seq ${#fileary[*]}`
 do
