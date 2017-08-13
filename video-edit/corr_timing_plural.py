@@ -14,7 +14,7 @@ def corr_timing(video_name):
     for i in range(video_num):
         tmp_name = video_name[i + 2].split("/")
         output_path[i] += tmp_name[len(tmp_name)-1][:tmp_name[len(tmp_name)-1].index('.')] + '.MP4'
-    print(output_path)
+
     # initialization
     movie = [cv.VideoCapture(video_path[i]) for i in range(video_num)]
     frame_num = [0 for i in range(video_num)]
@@ -36,7 +36,7 @@ def corr_timing(video_name):
         width[i] = int(movie[i].get(3))
 
     img = []
-    div = int((video_num + 1) / 3)
+    div = int((video_num + 2) / 3)
     for i in range(video_num):
         img.append([np.zeros((height[i], width[i], 3), np.uint8) for j in range(frame_num[i])])
         for k in range(frame_num[i]):
