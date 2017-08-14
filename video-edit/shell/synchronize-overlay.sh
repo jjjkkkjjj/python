@@ -39,5 +39,6 @@ for i in `seq ${#fileary[*]}`
         tmp="${tmp}${PLAYER}/${j} "
     done
     python corr_timing_plural.py ../../../Hisamitsu/${PLAYER}/after_synchronized_overlay/$tmp
+    tmp=""
 done
 

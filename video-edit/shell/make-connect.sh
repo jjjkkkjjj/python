@@ -42,5 +42,7 @@ do
         tmp="${tmp}${PLAYER}/after_synchronized_connect/${j%.MOV}.MP4 "
     done
     python connect_video.py ${tmp_o}${tmp}
+    tmp=""
+    tmp_o=""
 done
 

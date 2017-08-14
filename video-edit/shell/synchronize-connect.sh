@@ -38,5 +38,6 @@ do
         tmp="${tmp}${PLAYER}/${j} "
     done
     python corr_timing_plural.py ../../../Hisamitsu/${PLAYER}/after_synchronized_connect/$tmp
+    tmp=""
 done
 
