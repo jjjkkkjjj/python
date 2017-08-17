@@ -99,14 +99,18 @@ def corr_timing(video_name):
                     continue
 
     fourcc = cv.VideoWriter_fourcc(*'MPEG')
-    out = [cv.VideoWriter(output_path[i], fourcc, frame_rate[i], (int(WIDTH / 3), int(HEIGHT / div))) for i in range(video_num)]
+    out = [cv.VideoWriter(output_path[i], fourcc, frame_rate[i], (int(width[i]), int(height[i]))) for i in range(video_num)]
 
     del tmp[video_num:]
     MIN = tmp.index(min(tmp))
     for i in range(video_num):
         diff_frame = tmp[i] - tmp[MIN]
-        for j in range(frame_num[i]-diff_frame):
-            out[i].write(img[i][j+diff_frame])
+        TMP = 0
+        movie[i].set(1, diff_frame)
+        while TMP < frame_num[i] - diff_frame:
+            ret, TMP_img = movie[i].read()
+            out[i].write(TMP_img)
+            TMP += 1
 
     for i in range(video_num):
         out[i].release()
