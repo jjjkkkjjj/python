@@ -6,9 +6,9 @@ import numpy as np
 import sys
 
 # global
-x = []
-y = []
-z = []
+x = np.zeros(1)
+y = np.zeros(1)
+z = np.zeros(1)
 xmin = 99999
 xmax = -99999
 ymin = 99999
@@ -27,6 +27,10 @@ def update(i):
     if i != 0:
         ax.cla()
 
+    ax.set_xlim([xmin, xmax])
+    ax.set_ylim([ymin, ymax])
+    ax.set_zlim([zmin, zmax])
+
     ax.scatter3D(x[i], y[i], z[i])
 
     plt.title('frame number=' + str(i))
@@ -39,36 +43,29 @@ def view_3d(filename):
     data = np.delete(data, [0,1], 1)
 
     frames = data.shape[0]
+    joints = data.shape[1]/3
+
+    global x,y,z,xmax,xmin,ymax,ymin,zmax,zmin
+
+    x = np.zeros((frames, joints))
+    y = np.zeros((frames, joints))
+    z = np.zeros((frames, joints))
 
     for i, row in enumerate(data):
-        count = 0
-        tmp = 0
-        x.append([])
-        y.append([])
-        z.append([])
-        while count < len(row):
-            if row[count] == row[count] or row[count + 1] == row[count + 1] or row[count + 2] == row[count + 2]:
-                x[i].append(row[count])
-                y[i].append(row[count + 1])
-                z[i].append(row[count + 2])
+        for j, element in enumerate(row):
+            if j % 3 == 0:
+                x[i][int(j/3)] = element
+            elif j % 3 == 1:
+                y[i][int(j/3)] = element
+            else:
+                z[i][int(j/3)] = element
 
-
-            tmp += 1
-            count += 3
-    npx = np.array(x)
-    npy = np.array(y)
-    npz = np.array(z)
-
-    xmin = np.array(npx.min()).min()
-    xmax = np.array(npx.max()).max()
-    ymin = np.array(npy.min()).min()
-    ymax = np.array(npy.max()).max()
-    zmin = np.array(npz.min()).min()
-    zmax = np.array(npz.max()).max()
-
-    ax.set_xlim([xmin, xmax])
-    ax.set_ylim([ymin, ymax])
-    ax.set_zlim([zmin, zmax])
+    xmin = np.nanmin(x)
+    xmax = np.nanmax(x)
+    ymin = np.nanmin(y)
+    ymax = np.nanmax(y)
+    zmin = np.nanmin(z)
+    zmax = np.nanmax(z)
 
 
     ani = anm.FuncAnimation(fig, update, interval=20, frames=frames)
