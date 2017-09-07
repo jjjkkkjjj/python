@@ -6,10 +6,13 @@ def overlay_video(output_path, video):
     video_num = len(video)-2
 
     #keio
-    #video_path = ['../data/video/%s' % video[i + 2] for i in range(video_num)]
+    video_path = ['/Users/junkadonosuke/Desktop/研究/共同研究/慶応大/データ/%s' % video[i + 2] for i in range(video_num)]
+
+    #Desktop
+    #video_path = ['/Users/junkadonosuke/Desktop/%s' % video[i + 2] for i in range(video_num)]
 
     #hisamitsu
-    video_path = ['../../../Hisamitsu/%s' % video[i + 2] for i in range(video_num)]
+    #video_path = ['../../../Hisamitsu/%s' % video[i + 2] for i in range(video_num)]
 
     # initialization
     movie = [cv.VideoCapture(video_path[i]) for i in range(video_num)]

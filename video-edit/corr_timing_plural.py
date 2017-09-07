@@ -5,12 +5,16 @@ import sys
 def corr_timing(video_name):
     video_num = len(video_name) - 2
     # keio
-    #video_path = ['../data/video/%s' % video_name[i + 1] for i in range(video_num)]
-    #output_path = ['../data/video/%s' % video_name[i + 3] for i in range(video_num)]
+    video_path = ['/Users/junkadonosuke/Desktop/研究/共同研究/慶応大/データ/%s' % video_name[i + 2] for i in range(video_num)]
+    output_path = ['/Users/junkadonosuke/Desktop/研究/共同研究/慶応大/データ/%s' % video_name[1] for i in range(video_num)]
+
+    # Desktop
+    #video_path = ['/Users/junkadonosuke/Desktop/%s' % video_name[i + 2] for i in range(video_num)]
+    #output_path = ['/Users/junkadonosuke/Desktop/%s' % video_name[1] for i in range(video_num)]
 
     # hisamitsu
-    video_path = ['../../../Hisamitsu/%s' % video_name[i + 2] for i in range(video_num)]
-    output_path = [video_name[1] for i in range(video_num)]
+    #video_path = ['../../../Hisamitsu/%s' % video_name[i + 2] for i in range(video_num)]
+    #output_path = [video_name[1] for i in range(video_num)]
     for i in range(video_num):
         tmp_name = video_name[i + 2].split("/")
         output_path[i] += tmp_name[len(tmp_name)-1][:tmp_name[len(tmp_name)-1].index('.')] + '.MP4'
