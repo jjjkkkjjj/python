@@ -1,9 +1,10 @@
 import numpy as np
 import sys
 import math
+import handle_DP_data as hDP
 
 # global
-#limit_inc = [-5,-4,-3,-2, -1, 0]
+Limit = 10
 
 class DP:
     def __init__(self):
@@ -28,7 +29,7 @@ class SyncDP:
         self.__back_trackX = np.zeros((self.__xtime, self.__ytime), int)
         self.__back_trackY = np.zeros((self.__xtime, self.__ytime), int)
         # limit_inclimen
-        self.__limitationY = [i for i in range(-100, 1, 1)]
+        self.__limitationY = [i for i in range(-Limit, 1, 1)]
         self.__corr_time = [i for i in range(self.__xtime)]
         self.__F = True
 
@@ -64,13 +65,17 @@ class SyncDP:
     def show_corrPoints(self):
         if not self.__F:
             return False
-        print(self.__corr_time)
+        for i in range(len(self.__corr_time)):
+            print('{},{}'.format(i,self.__corr_time[i]))
         return
 
     def return_corrPoints(self):
         if not self.__F:
             return False
         return self.__corr_time
+
+    def return_length_limitationY(self):
+        return len(self.__limitationY)
 
 def local_cost_calculate(x, y, dim):# L2 norm
     tmp = 0
@@ -98,54 +103,9 @@ def simple_DP_Matching(x, y):# comparision with x and y # x,y must be numpy and 
 
     DP = SyncDP(x, y, dim)
     if not DP.calculate():
-        return [-1]
+        return [-1 for i in range(x_time)]
     #DP.show_corrPoints()
     return DP.return_corrPoints()
-
-
-    """
-    for i in range(x_time):
-        for j in range(y_time):
-            local_cost[i][j] = local_cost_calculate(x[i], y[j], dim)
-
-    length_lim = len(limit_inc)
-
-    matching_cost = [[DP() for j in range(y_time)] for i in range(x_time)]
-
-    #matching_cost = np.ones((x_time, y_time)) * np.nan
-    matching_cost[0][0].matching_cost = 0
-    matching_cost[0][0].Y_back_track = 0
-
-    for i in range(1, x_time):
-        for j in range(y_time):
-            tmp = np.ones(length_lim) * np.nan
-            for k, value in enumerate(limit_inc):
-                if j+value >= 0:
-                    tmp[k] = matching_cost[i-1][j+value].matching_cost
-
-            matching_cost[i][j].set(np.nanmin(tmp) + local_cost[i][j], i - 1, j + limit_inc[np.nanargmin(tmp)])
-
-    del local_cost
-
-    if np.isinf(matching_cost[x_time-1][y_time-1].matching_cost):
-        print("there is no correspondence")
-
-    corr_time = [i for i in range(x_time)]
-    corr_time[x_time-1] = y_time - 1
-    for i in range(x_time-2, -1, -1):
-        corr_time[i] = matching_cost[i][corr_time[i+1]].Y_back_track
-    """
-    """
-    print("x:y")
-    for i in range(x_time):
-        print(str(i)+":"+str(corr_time[i]))
-    """
-    """
-    print(corr_time)
-    del matching_cost
-
-    return
-    """
 
 
 def SIMPLE_DP_MATCHING(filepath1, filepath2):
@@ -160,7 +120,7 @@ def SIMPLE_DP_MATCHING(filepath1, filepath2):
 
     if data1.shape[1] != data2.shape[1]:
         print("data's length is different")
-        return False, diff_detail
+        return False, diff_detail, Limit
 
 
     data1 = data1.T
@@ -173,14 +133,17 @@ def SIMPLE_DP_MATCHING(filepath1, filepath2):
     #diff_detail.append(simple_DP_Matching(data1[0:0 + 3], data2[0:0 + 3]))
     #print(diff_detail)
     #simple_DP_Matching(data1[12:12+3], data2[12:12+3])
-    return True, diff_detail
+
+    hDP.write_simpleDP_data(diff_detail, filepath1, filepath2, Limit)
+
+    return True, diff_detail, Limit
 
 if __name__ == '__main__':
     arg = sys.argv
     if len(arg) != 3:
         print ("argument error:python Simple_DP.py filepath1 filepath2")
     else:
-        tmp_bool, tmp_list = SIMPLE_DP_MATCHING(arg[1], arg[2])
+        tmp_bool, tmp_list, tmp_limit = SIMPLE_DP_MATCHING(arg[1], arg[2])
         if tmp_bool:
             print("finished")
         else:
