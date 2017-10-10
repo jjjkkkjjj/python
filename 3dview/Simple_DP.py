@@ -2,9 +2,10 @@ import numpy as np
 import sys
 import math
 import handle_DP_data as hDP
+import time
 
 # global
-Limit = 10
+Limit = 5
 
 class DP:
     def __init__(self):
@@ -35,11 +36,14 @@ class SyncDP:
 
     def calculate(self):
         print("calculating now...")
+        start_time = time.time()
+
         for i in range(self.__xtime):
             for j in range(self.__ytime):
                 self.__local_cost[i][j] = local_cost_calculate(self.__x[i], self.__y[j], self.__dim)
                 if np.isnan(self.__local_cost[i][j]):
                     self.__F = False
+                    duration = time.time() - start_time
                     print("The data include missing value")
                     return False
 
@@ -59,7 +63,10 @@ class SyncDP:
         self.__corr_time[self.__xtime - 1] = self.__ytime - 1
         for i in range(self.__xtime - 2, -1, -1):
             self.__corr_time[i] = self.__back_trackY[i][self.__corr_time[i + 1]]
+
+        duration = time.time() - start_time
         print("calculated")
+        print("{} sec".format(duration))
         return True
 
     def show_corrPoints(self):
@@ -126,8 +133,12 @@ def SIMPLE_DP_MATCHING(filepath1, filepath2):
     data1 = data1.T
     data2 = data2.T
 
+    start_time = time.time()
     for i in range(0, data1.shape[0], 3):
         diff_detail.append(simple_DP_Matching(data1[i:i+3], data2[i:i+3]))# i = 0,1X->0,3,6...
+
+    duration = time.time() - start_time
+    print("Calculation time: {} sec".format(duration))
 
     #print(diff_detail)
     #diff_detail.append(simple_DP_Matching(data1[0:0 + 3], data2[0:0 + 3]))
