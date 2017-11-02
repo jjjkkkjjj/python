@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import cv2 as cv
 import numpy as np
 import sys
@@ -5,12 +6,12 @@ import sys
 def corr_timing(video_name):
     video_num = len(video_name) - 2
     # keio
-    video_path = ['/Users/junkadonosuke/Desktop/研究/共同研究/慶応大/データ/%s' % video_name[i + 2] for i in range(video_num)]
-    output_path = ['/Users/junkadonosuke/Desktop/研究/共同研究/慶応大/データ/%s' % video_name[1] for i in range(video_num)]
+    #video_path = ['/Users/junkadonosuke/Desktop/研究/共同研究/慶応大/データ/%s' % video_name[i + 2] for i in range(video_num)]
+    #output_path = ['/Users/junkadonosuke/Desktop/研究/共同研究/慶応大/データ/%s' % video_name[1] for i in range(video_num)]
 
     # Desktop
-    #video_path = ['/Users/junkadonosuke/Desktop/%s' % video_name[i + 2] for i in range(video_num)]
-    #output_path = ['/Users/junkadonosuke/Desktop/%s' % video_name[1] for i in range(video_num)]
+    video_path = ['/Users/junkadonosuke/Desktop/%s' % video_name[i + 2] for i in range(video_num)]
+    output_path = ['/Users/junkadonosuke/Desktop/%s' % video_name[1] for i in range(video_num)]
 
     # hisamitsu
     #video_path = ['../../../Hisamitsu/%s' % video_name[i + 2] for i in range(video_num)]

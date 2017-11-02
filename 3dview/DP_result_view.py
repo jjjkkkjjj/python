@@ -132,26 +132,22 @@ def view_3d(arg):
     # color[time][joint][rgb]
     # delay -> blue, fast -> red
     color = [[[0.0, 0.0, 0.0] for j in range(joints)] for i in range(frames)]
-    tmp_count_zero = [0 for i in range(joints)]
     for i in range(1, frames):
         for j in range(joints):
             if diff_detail[j][i] == -1:
                 color[i][j] = [0.0,0.0,0.0]
             else:
                 tmp_diff = diff_detail[j][i] - diff_detail[j][i-1]
-                if tmp_diff == 1:
-                    color[i][j] = [0.0,0.0,0.0]
-                    tmp_count_zero[j] = 0
-                # delay
+                # delay blue
+                if tmp_diff > 0:
+                    color[i][j] = [0.0,0.0,tmp_diff*1.0/limit_num]
+                # correspond black
                 elif tmp_diff == 0:
-                    if tmp_count_zero[j] != limit_num:
-                        tmp_count_zero[j] += 1
-                    color[i][j] = [0.0,0.0,tmp_count_zero[j]*1.0/limit_num]
+                    color[i][j] = [1.0,1.0,1.0]
                     #print('{},{},{}'.format(tmp_count_zero[j],limit_num,float(tmp_count_zero[j]/limit_num)))
-                # fast
+                # fast red
                 else:
-                    color[i][j] = [(tmp_diff-1)*1.0/limit_num,0.0,0.0]
-                    tmp_count_zero[j] = 0
+                    color[i][j] = [-tmp_diff*1.0/limit_num,0.0,0.0]
                     #print('{},{},{}'.format((tmp_diff-1),limit_num,float((tmp_diff-1)/limit_num)))
 
 

@@ -5,13 +5,19 @@ import handle_DP_data as hDP
 import time
 
 # global
-Limit = 5
+#Limit = 5
+# x,y
+Limit = [[-1,0], [-1,-1], [0,-1]]
+Points = {"head":0, "R_ear":1, "L_ear":2, "sternum":3, "C7":4, "R_rib":5, "L_rib":6, "R_ASIS":7, "L_ASIS":8, "R_PSIS":9, "L_PSIS":10,
+          "R_frontshoulder":11, "R_backshoulder":12, "R_in_elbow":13, "R_out_elbow":14, "R_in_wrist":15, "R_out_wrist":16, "R_hand":17,
+          "L_frontshoulder":18, "L_backshoulder":19, "L_in_elbow":20, "L_out_elbow":21, "D_UA?":22, "L_in_wrist":23, "L_out_wrist":24,
+          "L_hand":25}
 
 class DP:
     def __init__(self):
         self.matching_cost = np.Inf
-        self.X_back_track = -1 # no need because limitation is y only
-        self.Y_back_track = -1
+        self.X_back_track = -np.Inf
+        self.Y_back_track = -np.Inf
     def set(self, M_COST, X_BT, Y_BT):
         self.matching_cost = M_COST
         self.X_back_track = X_BT
@@ -27,11 +33,10 @@ class SyncDP:
         self.__ytime = y.shape[0]
         self.__local_cost = np.zeros((self.__xtime, self.__ytime))
         self.__matching_cost = np.ones((self.__xtime, self.__ytime)) * np.Inf
-        self.__back_trackX = np.zeros((self.__xtime, self.__ytime), int)
-        self.__back_trackY = np.zeros((self.__xtime, self.__ytime), int)
-        # limit_inclimen
-        self.__limitationY = [i for i in range(-Limit, Limit+1, 1)]
-        self.__corr_time = [i for i in range(self.__xtime)]
+        self.__back_trackX = np.zeros((self.__xtime, self.__ytime), int) * -1
+        self.__back_trackY = np.zeros((self.__xtime, self.__ytime), int) * -1
+        self.__corr_X = []
+        self.__corr_Y = []
         self.__F = True
 
     def calculate(self):
@@ -47,22 +52,43 @@ class SyncDP:
                     print("The data include missing value")
                     return False
 
-        self.__matching_cost[0][0] = 0
+        for j in range(self.__ytime):
+            self.__matching_cost[0][j] = self.__local_cost[0][j]
+            self.__back_trackX[0][j] = -1
+            self.__back_trackY[0][j] = -1
 
         for i in range(1, self.__xtime):
             for j in range(self.__ytime):
-                tmp = np.ones(len(self.__limitationY)) * np.nan
-                for k, value in enumerate(self.__limitationY):
-                    if j + value >= 0 and j + value < self.__ytime:
-                            tmp[k] = self.__matching_cost[i - 1][j + value]
+                tmp_min = np.Inf
+                tmp_x = -np.Inf
+                tmp_y = -np.Inf
+                for k in range(len(Limit)):
+                    i_ = i + Limit[k][0]
+                    j_ = j + Limit[k][1]
+                    if i_ >= 0 and i_ < self.__xtime and j_ >= 0 and j_ < self.__ytime:
+                        if tmp_min > self.__matching_cost[i_][j_]:
+                            tmp_min = self.__matching_cost[i_][j_]
+                            tmp_x = i_
+                            tmp_y = j_
+                if np.isinf(tmp_min):
+                    print("An error was occurred")
+                    return False
+                self.__matching_cost[i][j] = tmp_min + self.__local_cost[i][j]
+                self.__back_trackX[i][j] = tmp_x
+                self.__back_trackY[i][j] = tmp_y
 
-                self.__matching_cost[i][j] = np.nanmin(tmp) + self.__local_cost[i][j]
-                self.__back_trackX[i][j] = i - 1
-                self.__back_trackY[i][j] = j + self.__limitationY[np.nanargmin(tmp)]
+        backX = self.__xtime - 1
+        backY = np.nanargmin(self.__matching_cost[backX])
+        tmp = 0
+        while backX > -1 and backY > -1:
+            self.__corr_X.append(backX)
+            self.__corr_Y.append(backY)
+            backX = self.__back_trackX[self.__corr_X[tmp]][self.__corr_Y[tmp]]
+            backY = self.__back_trackY[self.__corr_X[tmp]][self.__corr_Y[tmp]]
+            tmp += 1
 
-        self.__corr_time[self.__xtime - 1] = self.__ytime - 1
-        for i in range(self.__xtime - 2, -1, -1):
-            self.__corr_time[i] = self.__back_trackY[i][self.__corr_time[i + 1]]
+        self.__corr_X.reverse()
+        self.__corr_Y.reverse()
 
         duration = time.time() - start_time
         print("calculated")
@@ -72,17 +98,15 @@ class SyncDP:
     def show_corrPoints(self):
         if not self.__F:
             return False
-        for i in range(len(self.__corr_time)):
-            print('{},{}'.format(i,self.__corr_time[i]))
+        for i in range(len(self.__corr_X)):
+            print('{},{}'.format(self.__corr_X[i],self.__corr_Y[i]))
         return
 
     def return_corrPoints(self):
         if not self.__F:
             return False
-        return self.__corr_time
+        return self.__corr_X, self.__corr_Y
 
-    def return_length_limitationY(self):
-        return len(self.__limitationY)
 
 def local_cost_calculate(x, y, dim):# L2 norm
     tmp = 0
@@ -115,7 +139,7 @@ def simple_DP_Matching(x, y):# comparision with x and y # x,y must be numpy and 
     return DP.return_corrPoints()
 
 
-def SIMPLE_DP_MATCHING(filepath1, filepath2):
+def FREE_INI_FIN_DP_MATCHING(filepath1, filepath2, joints):
     data1 = np.genfromtxt(fname=filepath1, dtype=float, delimiter=',', skip_header=5)
     data1 = np.delete(data1, [0, 1], 1)
 
@@ -134,8 +158,9 @@ def SIMPLE_DP_MATCHING(filepath1, filepath2):
     data2 = data2.T
 
     start_time = time.time()
-    for i in range(0, data1.shape[0], 3):
-        diff_detail.append(simple_DP_Matching(data1[i:i+3], data2[i:i+3]))# i = 0,1X->0,3,6...
+
+    for joint in joints:
+        diff_detail.append(simple_DP_Matching(data1[Points[joint]*3:Points[joint]*3+3], data2[Points[joint]*3:Points[joint]*3+3]))# i = 0,1X->0,3,6...
 
     duration = time.time() - start_time
     print("Calculation time: {} sec".format(duration))
@@ -143,18 +168,18 @@ def SIMPLE_DP_MATCHING(filepath1, filepath2):
     #print(diff_detail)
     #diff_detail.append(simple_DP_Matching(data1[0:0 + 3], data2[0:0 + 3]))
     #print(diff_detail)
-    #simple_DP_Matching(data1[12:12+3], data2[12:12+3])
+    #simple_DP_Matching(data1[51:51+3], data2[51:51+3])
 
-    hDP.write_simpleDP_data(diff_detail, filepath1, filepath2, Limit)
+    #hDP.write_simpleDP_data(diff_detail, filepath1, filepath2, Limit)
 
-    return True, diff_detail, Limit
+    return True, diff_detail
 
 if __name__ == '__main__':
     arg = sys.argv
-    if len(arg) != 3:
+    if len(arg) > 3:
         print ("argument error:python Simple_DP.py filepath1 filepath2")
     else:
-        tmp_bool, tmp_list, tmp_limit = SIMPLE_DP_MATCHING(arg[1], arg[2])
+        tmp_bool, tmp_list = FREE_INI_FIN_DP_MATCHING(arg[1], arg[2], arg[3])
         if tmp_bool:
             print("finished")
         else:
