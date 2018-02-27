@@ -74,7 +74,21 @@ def update(i):
 
     for line in Line:
         ax.plot([x[i][line[0]],x[i][line[1]]],[y[i][line[0]],y[i][line[1]]],[z[i][line[0]],z[i][line[1]]],"-",color='blue')
-    ax.scatter3D(x[i], y[i], z[i], ".",color='blue')
+    ax.scatter3D(x[i], y[i], z[i],".",color='blue')
+    for j in range(len(x[i])):
+        try:
+            ax.text(x[i][j],y[i][j],z[i][j], str(j))
+        except ValueError:
+            continue
+    """
+    for line in Line:
+        ax.plot([x[0][line[0]], x[0][line[1]]], [y[0][line[0]], y[0][line[1]]], [z[0][line[0]], z[0][line[1]]], "-",
+                color='blue')
+    ax.scatter3D(x[0], y[0], z[0], ".", color='blue')
+    l = 8
+    ax.text(x[0][l], y[0][l], z[0][l], str(l))
+    """
+
 
     # show data
     #height

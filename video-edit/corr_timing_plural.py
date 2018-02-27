@@ -12,6 +12,10 @@ def corr_timing(video_name):
     # Desktop
     video_path = ['/Users/junkadonosuke/Desktop/%s' % video_name[i + 2] for i in range(video_num)]
     output_path = ['/Users/junkadonosuke/Desktop/%s' % video_name[1] for i in range(video_num)]
+    
+    # free
+    video_path = [video_name[i + 2] for i in range(video_num)]
+    output_path = [video_name[1] for i in range(video_num)]
 
     # hisamitsu
     #video_path = ['../../../Hisamitsu/%s' % video_name[i + 2] for i in range(video_num)]
@@ -102,7 +106,9 @@ def corr_timing(video_name):
                     choice = ord(str(INdex))
                 except ValueError:
                     continue
-
+    cv.destroyAllWindows()
+    print("wait a minute...")
+    
     fourcc = cv.VideoWriter_fourcc(*'MPEG')
     out = [cv.VideoWriter(output_path[i], fourcc, frame_rate[i], (int(width[i]), int(height[i]))) for i in range(video_num)]
 
@@ -120,7 +126,7 @@ def corr_timing(video_name):
     for i in range(video_num):
         out[i].release()
         movie[i].release()
-    cv.destroyAllWindows()
+
 
     return True, "ok"
 
