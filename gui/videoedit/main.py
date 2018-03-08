@@ -176,8 +176,9 @@ class Main(QMainWindow):
             hdiv = int((len(self.data) + 1)/2)
 
             self.Videowidget.show_progressbar(min_of_max*checknum)
+            fourcc = cv2.VideoWriter_fourcc(*'MPEG')
             if self.Videowidget.checkbox_connect.isChecked():
-                fourcc = cv2.VideoWriter_fourcc(*'MPEG')
+
                 video_out = cv2.VideoWriter(savename + "/" + video_name + "connect.MP4", int(fourcc), self.framerate,
                                             (self.width, self.height))
                 for frame in range(min_of_max):
@@ -203,7 +204,7 @@ class Main(QMainWindow):
                     video_out.write(cv2.cvtColor(output_img, cv2.COLOR_RGB2BGR))
                     self.Videowidget.setprogressvalue(frame)
 
-                    video_out.release()
+                video_out.release()
 
             if self.Videowidget.checkbox_overlay.isChecked():
                 video_out = cv2.VideoWriter(savename + "/" + video_name + "overlay.MP4", int(fourcc), self.framerate,
