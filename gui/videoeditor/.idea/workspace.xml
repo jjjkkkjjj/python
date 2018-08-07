@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dc2bde94-52fb-4af2-892e-43a241e208fc" name="Default" comment="" />
+    <list default="true" id="a9e32e47-a08b-4553-a9ca-59aa90d969a9" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -10,7 +10,8 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/annotator$main_py.coverage" NAME="main.py Coverage Results" MODIFIED="1533572119039" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/videoeditor$allcutter_py.coverage" NAME="allcutter.py Coverage Results" MODIFIED="1533659948833" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/videoeditor$main_py.coverage" NAME="main.py Coverage Results" MODIFIED="1533659914839" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
@@ -18,48 +19,56 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1395">
-              <caret line="93" column="36" lean-forward="false" selection-start-line="93" selection-start-column="36" selection-end-line="93" selection-end-column="36" />
+            <state relative-caret-position="268">
+              <caret line="146" column="89" lean-forward="false" selection-start-line="146" selection-start-column="89" selection-end-line="146" selection-end-column="89" />
               <folding>
-                <element signature="e#0#22#0" expanded="true" />
+                <element signature="e#24#34#0" expanded="true" />
+                <element signature="e#235#481#0" expanded="false" />
+                <element signature="e#515#2099#0" expanded="false" />
+                <element signature="e#2136#2577#0" expanded="false" />
+                <element signature="e#2631#2781#0" expanded="false" />
+                <element signature="e#2913#3351#0" expanded="false" />
+                <element signature="e#5409#6853#0" expanded="false" />
+                <element signature="e#6896#7125#0" expanded="false" />
+                <element signature="e#7165#7451#0" expanded="false" />
+                <element signature="e#7495#7646#0" expanded="false" />
+                <element signature="e#7676#7792#0" expanded="false" />
+                <element signature="e#7829#7970#0" expanded="false" />
+                <element signature="e#8000#8100#0" expanded="false" />
+                <element signature="e#8140#8178#0" expanded="false" />
+                <element signature="e#8228#8501#0" expanded="false" />
+                <element signature="e#8541#8644#0" expanded="false" />
+                <element signature="e#8652#9151#1" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="c3d.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/c3d.py">
+      <file leaf-file-name="allcutter.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/allcutter.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="13335">
-              <caret line="895" column="0" lean-forward="false" selection-start-line="895" selection-start-column="0" selection-end-line="895" selection-end-column="0" />
+            <state relative-caret-position="365">
+              <caret line="423" column="99" lean-forward="false" selection-start-line="423" selection-start-column="99" selection-end-line="423" selection-end-column="99" />
               <folding>
-                <element signature="e#58#97#0" expanded="true" />
+                <element signature="e#24#34#0" expanded="true" />
+                <element signature="e#633#1885#0" expanded="false" />
+                <element signature="e#1922#2363#0" expanded="false" />
+                <element signature="e#2417#2567#0" expanded="false" />
+                <element signature="e#2699#3137#0" expanded="false" />
+                <element signature="e#10780#11279#1" expanded="false" />
+                <element signature="e#14973#17806#0" expanded="false" />
+                <element signature="e#15953#17806#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="subwindow.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/subwindow.py">
+      <file leaf-file-name="QtWidgets.pyi" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/.pyenv/versions/anaconda3-2.5.0/envs/py35qt5/lib/python3.5/site-packages/PyQt5/QtWidgets.pyi">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#22#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="leftdock.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/leftdock.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-                <marker date="1533573487065" expanded="true" signature="5953:6065" ph="..." />
-              </folding>
+            <state relative-caret-position="45090">
+              <caret line="3013" column="8" lean-forward="false" selection-start-line="3013" selection-start-column="8" selection-end-line="3013" selection-end-column="8" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -75,24 +84,19 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>pri</find>
-      <find>encode('utf-8')</find>
-      <find>decode</find>
-      <find>logging</find>
-      <find>encode</find>
-      <find>Reader</find>
+      <find>range</find>
+      <find>self</find>
+      <find>self.</find>
     </findStrings>
     <replaceStrings>
-      <replace>decode('euc)</replace>
-      <replace>encode('euc-jp')</replace>
+      <replace>self.parent.</replace>
     </replaceStrings>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/py-c3d/__init__.py" />
-        <option value="$PROJECT_DIR$/py-c3d/c3d.py" />
-        <option value="$PROJECT_DIR$/c3d.py" />
+        <option value="$PROJECT_DIR$/leftdock.py" />
+        <option value="$PROJECT_DIR$/allcutter.py" />
         <option value="$PROJECT_DIR$/main.py" />
       </list>
     </option>
@@ -122,67 +126,17 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="annotator" />
+              <option name="myItemId" value="videoeditor" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="annotator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="annotator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="annotator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="py-c3d" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="annotator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="annotator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="py-c3d" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="annotator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="annotator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="py-c3d" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scripts" />
+              <option name="myItemId" value="videoeditor" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -192,9 +146,9 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/.pyenv/versions/anaconda3-2.5.0/envs/qt4/bin/python2.7" />
     <property name="FullScreen" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="last_opened_file_path" value="$USER_HOME$/.pyenv/versions/anaconda3-2.5.0/envs/py35qt5/bin/python3.5" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -208,7 +162,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.main.py">
+  <component name="RunManager" selected="Python.allcutter.py">
     <configuration default="true" type="DjangoTestsConfigurationType" factoryName="Django tests">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -220,7 +174,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="annotator" />
+      <module name="videoeditor" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="TARGET" value="" />
       <option name="SETTINGS_FILE" value="" />
@@ -254,7 +208,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="annotator" />
+      <module name="videoeditor" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="ADDITIONAL_ARGS" value="" />
       <method />
@@ -268,9 +222,22 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="annotator" />
+      <module name="videoeditor" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="ADDITIONAL_ARGS" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="PyRemoteDebugConfigurationType" factoryName="Python Remote Debug">
+      <module name="" />
+      <option name="PORT" value="0" />
+      <option name="HOST" value="localhost" />
+      <PathMappingSettings>
+        <option name="pathMappings">
+          <list />
+        </option>
+      </PathMappingSettings>
+      <option name="REDIRECT_OUTPUT" value="true" />
+      <option name="SUSPEND_AFTER_CONNECT" value="true" />
       <method />
     </configuration>
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
@@ -279,14 +246,14 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
+      <option name="SDK_HOME" value="$USER_HOME$/.pyenv/versions/anaconda3-2.5.0/envs/py35qt5/bin/python3.5" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="annotator" />
+      <module name="videoeditor" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -302,7 +269,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <module name="annotator" />
+      <module name="videoeditor" />
       <method />
     </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
@@ -330,7 +297,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="annotator" />
+      <module name="videoeditor" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="" />
       <option name="CLASS_NAME" value="" />
@@ -350,7 +317,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="annotator" />
+      <module name="videoeditor" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="_new_regexPattern" value="&quot;&quot;" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
@@ -364,12 +331,12 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="$USER_HOME$/.pyenv/versions/anaconda3-2.5.0/envs/qt4/bin/python2.7" />
+      <option name="SDK_HOME" value="$USER_HOME$/.pyenv/versions/anaconda3-2.5.0/envs/py35qt5/bin/python3.5" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="annotator" />
+      <module name="videoeditor" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
       <option name="PARAMETERS" value="" />
@@ -377,8 +344,28 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <method />
     </configuration>
-    <list size="1">
+    <configuration default="false" name="allcutter.py" type="PythonConfigurationType" factoryName="Python">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/.pyenv/versions/anaconda3-2.5.0/envs/py35qt5/bin/python3.5" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="videoeditor" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/allcutter.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <method />
+    </configuration>
+    <list size="2">
       <item index="0" class="java.lang.String" itemvalue="Python.main.py" />
+      <item index="1" class="java.lang.String" itemvalue="Python.allcutter.py" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
@@ -386,11 +373,11 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="dc2bde94-52fb-4af2-892e-43a241e208fc" name="Default" comment="" />
-      <created>1533482359202</created>
+      <changelist id="a9e32e47-a08b-4553-a9ca-59aa90d969a9" name="Default" comment="" />
+      <created>1533606366743</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1533482359202</updated>
+      <updated>1533606366743</updated>
     </task>
     <servers />
   </component>
@@ -426,48 +413,90 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="2" />
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/main.py</url>
+          <line>57</line>
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="14" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="390">
+          <caret line="110" column="24" lean-forward="false" selection-start-line="110" selection-start-column="24" selection-end-line="110" selection-end-column="24" />
           <folding>
-            <element signature="e#0#22#0" expanded="true" />
+            <element signature="e#24#34#0" expanded="true" />
+            <element signature="e#235#481#0" expanded="false" />
+            <element signature="e#515#2099#0" expanded="false" />
+            <element signature="e#2136#2577#0" expanded="false" />
+            <element signature="e#2631#2781#0" expanded="false" />
+            <element signature="e#2913#3351#0" expanded="false" />
+            <element signature="e#5409#6853#0" expanded="false" />
+            <element signature="e#6896#7125#0" expanded="false" />
+            <element signature="e#7165#7451#0" expanded="false" />
+            <element signature="e#7495#7646#0" expanded="false" />
+            <element signature="e#7676#7792#0" expanded="false" />
+            <element signature="e#7829#7970#0" expanded="false" />
+            <element signature="e#8000#8100#0" expanded="false" />
+            <element signature="e#8140#8178#0" expanded="false" />
+            <element signature="e#8228#8501#0" expanded="false" />
+            <element signature="e#8541#8644#0" expanded="false" />
+            <element signature="e#8652#9151#1" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/c3d.py">
+    <entry file="file://$USER_HOME$/.pyenv/versions/anaconda3-2.5.0/envs/py35qt5/lib/python3.5/site-packages/PyQt5/QtWidgets.pyi">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="13335">
-          <caret line="895" column="0" lean-forward="false" selection-start-line="895" selection-start-column="0" selection-end-line="895" selection-end-column="0" />
+        <state relative-caret-position="45195">
+          <caret line="3013" column="8" lean-forward="false" selection-start-line="3013" selection-start-column="8" selection-end-line="3013" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/allcutter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2115">
+          <caret line="167" column="13" lean-forward="true" selection-start-line="167" selection-start-column="13" selection-end-line="167" selection-end-column="13" />
           <folding>
-            <element signature="e#58#97#0" expanded="true" />
+            <element signature="e#24#34#0" expanded="true" />
+            <element signature="e#633#1885#0" expanded="false" />
+            <element signature="e#1922#2363#0" expanded="false" />
+            <element signature="e#2417#2567#0" expanded="false" />
+            <element signature="e#2699#3137#0" expanded="false" />
+            <element signature="e#10780#11279#1" expanded="false" />
+            <element signature="e#14973#17806#0" expanded="false" />
+            <element signature="e#15953#17806#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/subwindow.py">
+    <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#22#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/leftdock.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-            <marker date="1533573487065" expanded="true" signature="5953:6065" ph="..." />
+            <element signature="e#24#34#0" expanded="true" />
+            <element signature="e#235#481#0" expanded="false" />
+            <element signature="e#515#2099#0" expanded="false" />
+            <element signature="e#2136#2577#0" expanded="false" />
+            <element signature="e#2631#2781#0" expanded="false" />
+            <element signature="e#2913#3351#0" expanded="false" />
+            <element signature="e#5409#6853#0" expanded="false" />
+            <element signature="e#6896#7125#0" expanded="false" />
+            <element signature="e#7165#7451#0" expanded="false" />
+            <element signature="e#7495#7646#0" expanded="false" />
+            <element signature="e#7676#7792#0" expanded="false" />
+            <element signature="e#7829#7970#0" expanded="false" />
+            <element signature="e#8000#8100#0" expanded="false" />
+            <element signature="e#8140#8178#0" expanded="false" />
+            <element signature="e#8228#8501#0" expanded="false" />
+            <element signature="e#8541#8644#0" expanded="false" />
+            <element signature="e#8652#9151#1" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -477,106 +506,82 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#22#0" expanded="true" />
+            <element signature="e#24#34#0" expanded="true" />
+            <element signature="e#235#481#0" expanded="false" />
+            <element signature="e#515#2099#0" expanded="false" />
+            <element signature="e#2136#2577#0" expanded="false" />
+            <element signature="e#2631#2781#0" expanded="false" />
+            <element signature="e#2913#3351#0" expanded="false" />
+            <element signature="e#5409#6853#0" expanded="false" />
+            <element signature="e#6896#7125#0" expanded="false" />
+            <element signature="e#7165#7451#0" expanded="false" />
+            <element signature="e#7495#7646#0" expanded="false" />
+            <element signature="e#7676#7792#0" expanded="false" />
+            <element signature="e#7829#7970#0" expanded="false" />
+            <element signature="e#8000#8100#0" expanded="false" />
+            <element signature="e#8140#8178#0" expanded="false" />
+            <element signature="e#8228#8501#0" expanded="false" />
+            <element signature="e#8541#8644#0" expanded="false" />
+            <element signature="e#8652#9151#1" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/py-c3d/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/py-c3d/c3d.py">
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="12975">
-          <caret line="871" column="18" lean-forward="false" selection-start-line="871" selection-start-column="18" selection-end-line="871" selection-end-column="18" />
+        <state relative-caret-position="255">
+          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/py-c3d/files.txt">
+    <entry file="file://$PROJECT_DIR$/leftdock.py" />
+    <entry file="file://$USER_HOME$/.pyenv/versions/anaconda3-2.5.0/envs/py35qt5/lib/python3.5/site-packages/PyQt5/QtWidgets.pyi">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="45090">
+          <caret line="3013" column="8" lean-forward="false" selection-start-line="3013" selection-start-column="8" selection-end-line="3013" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/subwindow.py">
+    <entry file="file://$PROJECT_DIR$/allcutter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="365">
+          <caret line="423" column="99" lean-forward="false" selection-start-line="423" selection-start-column="99" selection-end-line="423" selection-end-column="99" />
           <folding>
-            <element signature="e#0#22#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/leftdock.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-            <marker date="1533573487065" expanded="true" signature="5953:6065" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/subwindow.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#22#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/leftdock.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-            <marker date="1533573487065" expanded="true" signature="5953:6065" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/py-c3d/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/py-c3d/test/c3d_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1128">
-          <caret line="11" column="30" lean-forward="false" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/py-c3d/c3d.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="1095" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/py-c3d/files.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/c3d.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="13335">
-          <caret line="895" column="0" lean-forward="false" selection-start-line="895" selection-start-column="0" selection-end-line="895" selection-end-column="0" />
-          <folding>
-            <element signature="e#58#97#0" expanded="true" />
+            <element signature="e#24#34#0" expanded="true" />
+            <element signature="e#633#1885#0" expanded="false" />
+            <element signature="e#1922#2363#0" expanded="false" />
+            <element signature="e#2417#2567#0" expanded="false" />
+            <element signature="e#2699#3137#0" expanded="false" />
+            <element signature="e#10780#11279#1" expanded="false" />
+            <element signature="e#14973#17806#0" expanded="false" />
+            <element signature="e#15953#17806#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1395">
-          <caret line="93" column="36" lean-forward="false" selection-start-line="93" selection-start-column="36" selection-end-line="93" selection-end-column="36" />
+        <state relative-caret-position="268">
+          <caret line="146" column="89" lean-forward="false" selection-start-line="146" selection-start-column="89" selection-end-line="146" selection-end-column="89" />
           <folding>
-            <element signature="e#0#22#0" expanded="true" />
+            <element signature="e#24#34#0" expanded="true" />
+            <element signature="e#235#481#0" expanded="false" />
+            <element signature="e#515#2099#0" expanded="false" />
+            <element signature="e#2136#2577#0" expanded="false" />
+            <element signature="e#2631#2781#0" expanded="false" />
+            <element signature="e#2913#3351#0" expanded="false" />
+            <element signature="e#5409#6853#0" expanded="false" />
+            <element signature="e#6896#7125#0" expanded="false" />
+            <element signature="e#7165#7451#0" expanded="false" />
+            <element signature="e#7495#7646#0" expanded="false" />
+            <element signature="e#7676#7792#0" expanded="false" />
+            <element signature="e#7829#7970#0" expanded="false" />
+            <element signature="e#8000#8100#0" expanded="false" />
+            <element signature="e#8140#8178#0" expanded="false" />
+            <element signature="e#8228#8501#0" expanded="false" />
+            <element signature="e#8541#8644#0" expanded="false" />
+            <element signature="e#8652#9151#1" expanded="false" />
           </folding>
         </state>
       </provider>
