@@ -12,6 +12,7 @@ DATA_FILES = []
 OPTIONS = {}
 
 setup(
+    name="c3d Annotator",
     app=APP,
     data_files=DATA_FILES,
     options={'py2app': OPTIONS},

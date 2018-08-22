@@ -219,6 +219,11 @@ class Data:
         return
         """
 
+    def deleteLabel(self):
+        self.xnew[:, self.now_select] = np.nan
+        self.ynew[:, self.now_select] = np.nan
+        self.znew[:, self.now_select] = np.nan
+
     def setbone(self):
         """
         # progress bar?

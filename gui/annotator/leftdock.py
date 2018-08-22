@@ -84,6 +84,12 @@ class LeftDockWidget(QWidget):
         self.button_setlabel.clicked.connect(self.setLabel)
         vboxannotator.addWidget(self.button_setlabel)
 
+        # delete label
+        #self.button_deletelabel = QPushButton("Delete Label")
+        #self.button_deletelabel.setEnabled(False)
+        #self.button_deletelabel.clicked.connect(self.deleteLabel)
+        #vboxannotator.addWidget(self.button_deletelabel)
+
         self.groupAnnotator.setLayout(vboxannotator)
         self.groupAnnotator.setEnabled(False)
 
@@ -143,14 +149,18 @@ class LeftDockWidget(QWidget):
 
     # clicked set Label button
     def setLabel(self):
-        var = {}
-        var["label"] = str(self.selectedcombobox.currentText())
-        if self.radioUntilNan.isChecked():
-            var["init"] = int(self.spininit.text())
-            var["fin"] = int(self.spinfin.text())
-            var["interpolation"] = str(self.comboboxinterpolation.currentText())
-        self.parent.setLabel(var, self.radioUntilNan.isChecked())
-        self.parent.setFrameLabel()
+        if self.radioorigin.isChecked():
+            var = {}
+            var["label"] = str(self.selectedcombobox.currentText())
+            if self.radioUntilNan.isChecked():
+                var["init"] = int(self.spininit.text())
+                var["fin"] = int(self.spinfin.text())
+                var["interpolation"] = str(self.comboboxinterpolation.currentText())
+            self.parent.setLabel(var, self.radioUntilNan.isChecked())
+            self.parent.setFrameLabel()
+        else:
+            self.parent.deleteLabel()
+            self.parent.draw(fix=True)
 
     # clicked show bone
     #def showbone(self):
@@ -182,8 +192,18 @@ class LeftDockWidget(QWidget):
     def radiolabeledChanged(self):
         if self.radiolabeled.isChecked():
             self.check_showbone.setEnabled(True)
+            self.selectedcombobox.setVisible(False)
+            self.labelinterpolation.setVisible(False)
+            self.comboboxinterpolation.setVisible(False)
+            self.radioUntilNan.setText("Select deleted frames")
+            self.button_setlabel.setText("Delete Label")
         else:
             self.check_showbone.setEnabled(False)
+            self.selectedcombobox.setVisible(True)
+            self.labelinterpolation.setVisible(True)
+            self.comboboxinterpolation.setVisible(True)
+            self.radioUntilNan.setText("Interpolate nan")
+            self.button_setlabel.setText("Set Label")
 
         self.parent.now_select = -1
         self.parent.setmenuEnabled("click", False)
