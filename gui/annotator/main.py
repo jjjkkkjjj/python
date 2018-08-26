@@ -360,8 +360,6 @@ class Data:
                                     + (self.z[time, searchJointIdlists] - self.z[time, nearestJointId]) ** 2)
                                     
                     candIndex = searchJointIdlists[np.argmin(Dtmp)]
-
-
                     candMin = np.min(Dtmp)
 
                     if nearestDistance - self.Threshold_optimal < candMin and candMin < nearestDistance + self.Threshold_optimal:
@@ -374,7 +372,7 @@ class Data:
                             self.x[time:, candIndex].copy(), self.y[time:, candIndex].copy(), self.z[time:, candIndex].copy()
                         xtmp[nowTime:time, nanJointId], ytmp[nowTime:time, nanJointId], ztmp[nowTime:time, nanJointId] = 0.0, 0.0, 0.0
 
-                        inds = np.where((xtmp[time:, candIndex] == 0.0) & (ytmp[time:, candIndex] == 0.0) & (ztmp[time:, candIndex] == 0.0))[0]
+                        inds = np.where((xtmp[time:, nanJointId] == 0.0) & (ytmp[time:, nanJointId] == 0.0) & (ztmp[time:, nanJointId] == 0.0))[0]
                         if inds.size == 0:
                             nowTime = self.frame_max
                         else:
@@ -383,7 +381,7 @@ class Data:
                         break
 
                     if time == self.frame_max - 1:
-                        xtmp[nowTime:, nanJointId], ytmp[nowTime:, nanJointId], ztmp[nowTime:, nanJointId] = 0.0, 0.0, 0.0 # may not be needed
+                        #xtmp[nowTime:, nanJointId], ytmp[nowTime:, nanJointId], ztmp[nowTime:, nanJointId] = 0.0, 0.0, 0.0 # may not be needed
                         nowTime = self.frame_max
 
         self.x, self.y, self.z = xtmp.copy(), ytmp.copy(), ztmp.copy()
@@ -1021,7 +1019,7 @@ class Annotator(QMainWindow, Data):
             self.removePoints_action.setEnabled(BOOL)
             #self.autoselection_action.setEnabled(BOOL)
 
-print("activate qt!")
+print("activate qt4!")
 app = QApplication(sys.argv)
 form = Annotator()
 form.show()
