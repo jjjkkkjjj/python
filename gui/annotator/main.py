@@ -336,17 +336,18 @@ class Data:
                 nearestJointId = completeJointIdlists[np.argmin(Dtmp)]
 
                 for time in range(nowTime + 1, self.frame_max):
-                    # looking for previous time which has no nan
-                    # extract indices with nan
+                    """
                     if nanJointIdlists.size == 0:
                         continue
-                    """
+                    
                     Dtmp = np.sqrt((self.x[time, nanJointIdlists] - self.x[time, nearestJointId]) ** 2 \
                                    + (self.y[time, nanJointIdlists] - self.y[time, nearestJointId]) ** 2 \
                                    + (self.z[time, nanJointIdlists] - self.z[time, nearestJointId]) ** 2)
 
                     candIndex = nanJointIdlists[np.argmin(Dtmp)]
                     """
+                    # looking for previous time which has no nan
+                    # extract indices with nan
                     searchJointIdlists = nanJointIdlists[np.where((self.x[time - 1, nanJointIdlists] == 0.0)
                                                                 & (self.y[time - 1, nanJointIdlists] == 0.0)
                                                                 & (self.z[time - 1, nanJointIdlists] == 0.0))[0]]
@@ -382,6 +383,7 @@ class Data:
                         break
 
                     if time == self.frame_max - 1:
+                        xtmp[nowTime:, nanJointId], ytmp[nowTime:, nanJointId], ztmp[nowTime:, nanJointId] = 0.0, 0.0, 0.0 # may not be needed
                         nowTime = self.frame_max
 
         self.x, self.y, self.z = xtmp.copy(), ytmp.copy(), ztmp.copy()
