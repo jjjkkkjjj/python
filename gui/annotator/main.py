@@ -39,6 +39,8 @@ class Data:
                      [12, 14], [13, 14], [13, 15], [14, 16], [15, 16], [15, 17], [16, 17], [18, 20], [19, 21], [20, 21],
                      [20, 23], [21, 24], [23, 24], [23, 25], [24, 25],
                      [3, 5], [3, 6], [5, 6]]
+
+        self.Threshold_optimal = 50 # mm
         pass
 
     def read_from_csv(self, path):
@@ -280,6 +282,7 @@ class Data:
                     self.bone2[t].append([self.xnew[t, line[1]], self.ynew[t, line[1]], self.znew[t, line[1]]])
 
     # select optimal data as soon as possible
+    """
     def optimal_select(self, method, jointID, startFrame, label):
         tmp_index_num = [np.sum(self.x[i][self.x[i] != 0]) for i in range(self.frame_max)]
 
@@ -291,8 +294,99 @@ class Data:
             optimal_selector.DP()
         else:
             optimal_selector.extrapolate()
+    """
+
+    def optimal_select(self):
+        xtmp, ytmp, ztmp = self.x.copy(), self.y.copy(), self.z.copy()
 
 
+        # 0 -> time 1 -> joint id
+        nanIndex = np.where((self.x == 0.0) & (self.y == 0.0) & (self.z == 0))
+        #print nanIndex
+
+        completeJointIdlists = []
+        nanJointIdlists = []
+        # nanTimelists[joint id] -> nan time list
+        nanTimelists = []
+        for i in range(self.x.shape[1]):
+            if np.sum(nanIndex[1] == i) == 0:
+                completeJointIdlists.append(i)
+                continue
+            else:
+                nanJointIdlists.append(i)
+                nanTimelists.append(nanIndex[0][nanIndex[1] == i])
+                #print nanTimelists[i]
+
+        nanJointIdlists = np.array(nanJointIdlists)
+
+        for nanJointId, nanTimes in zip(nanJointIdlists, nanTimelists):
+            #if np.where((nanTimes == 0) | (nanTimes == 1) | (nanTimes == 2)).shape[0] > 0:
+            #print (nanTimes)
+            if np.where(nanTimes == 0)[0] > 0:
+                continue
+
+            nowTime = nanTimes[0]
+            while nowTime < self.frame_max - 1:
+
+                Dtmp = (self.x[nowTime, completeJointIdlists] - xtmp[nowTime - 1, nanJointId]) ** 2 \
+                       + (self.y[nowTime, completeJointIdlists] - ytmp[nowTime - 1, nanJointId]) ** 2 \
+                       + (self.z[nowTime, completeJointIdlists] - ztmp[nowTime - 1, nanJointId]) ** 2
+
+                nearestDistance = math.sqrt(np.min(Dtmp))
+                nearestJointId = completeJointIdlists[np.argmin(Dtmp)]
+
+                for time in range(nowTime + 1, self.frame_max):
+                    # looking for previous time which has no nan
+                    # extract indices with nan
+                    if nanJointIdlists.size == 0:
+                        continue
+                    """
+                    Dtmp = np.sqrt((self.x[time, nanJointIdlists] - self.x[time, nearestJointId]) ** 2 \
+                                   + (self.y[time, nanJointIdlists] - self.y[time, nearestJointId]) ** 2 \
+                                   + (self.z[time, nanJointIdlists] - self.z[time, nearestJointId]) ** 2)
+
+                    candIndex = nanJointIdlists[np.argmin(Dtmp)]
+                    """
+                    searchJointIdlists = nanJointIdlists[np.where((self.x[time - 1, nanJointIdlists] == 0.0)
+                                                                & (self.y[time - 1, nanJointIdlists] == 0.0)
+                                                                & (self.z[time - 1, nanJointIdlists] == 0.0))[0]]
+
+                    if searchJointIdlists.size == 0:
+                        continue
+
+                    Dtmp = np.sqrt((self.x[time, searchJointIdlists] - self.x[time, nearestJointId]) ** 2 \
+                                    + (self.y[time, searchJointIdlists] - self.y[time, nearestJointId]) ** 2 \
+                                    + (self.z[time, searchJointIdlists] - self.z[time, nearestJointId]) ** 2)
+                                    
+                    candIndex = searchJointIdlists[np.argmin(Dtmp)]
+
+
+                    candMin = np.min(Dtmp)
+
+                    if nearestDistance - self.Threshold_optimal < candMin and candMin < nearestDistance + self.Threshold_optimal:
+                        #XTMP, YTMP, ZTMP = xtmp[time:, candIndex].copy(), ytmp[time:, candIndex].copy(), ztmp[time:, candIndex].copy()
+
+                        #xtmp[time:, candIndex], ytmp[time:, candIndex], ztmp[time:, candIndex] =\
+                        #    xtmp[time:, nanJointId].copy(), ytmp[time:, nanJointId].copy(), ztmp[time:, nanJointId].copy()
+
+                        xtmp[time:, nanJointId], ytmp[time:, nanJointId], ztmp[time:, nanJointId] = \
+                            self.x[time:, candIndex].copy(), self.y[time:, candIndex].copy(), self.z[time:, candIndex].copy()
+                        xtmp[nowTime:time, nanJointId], ytmp[nowTime:time, nanJointId], ztmp[nowTime:time, nanJointId] = 0.0, 0.0, 0.0
+
+                        inds = np.where((xtmp[time:, candIndex] == 0.0) & (ytmp[time:, candIndex] == 0.0) & (ztmp[time:, candIndex] == 0.0))[0]
+                        if inds.size == 0:
+                            nowTime = self.frame_max
+                        else:
+                            nowTime = time + inds[0]
+
+                        break
+
+                    if time == self.frame_max - 1:
+                        nowTime = self.frame_max
+
+        self.x, self.y, self.z = xtmp.copy(), ytmp.copy(), ztmp.copy()
+
+        QMessageBox.information(self, "Auto Optimal Selection", "Finished!!!")
 
 
 class Annotator(QMainWindow, Data):
@@ -508,6 +602,8 @@ class Annotator(QMainWindow, Data):
             self.groupxrange.setEnabled(True)
             self.groupyrange.setEnabled(True)
             self.groupzrange.setEnabled(True)
+
+            self.autoselection_action.setEnabled(True)
 
             return True
 
@@ -821,9 +917,10 @@ class Annotator(QMainWindow, Data):
         pass
 
     def autoSelect(self):
-        setautolabeldialog = SetLabelforAuto(self)
-        self.setmenuEnabled("menuClick", False)
-        setautolabeldialog.show()
+        self.optimal_select()
+        #setautolabeldialog = SetLabelforAuto(self)
+        #self.setmenuEnabled("menuClick", False)
+        #setautolabeldialog.show()
 
     ###
     # UI

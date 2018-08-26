@@ -234,7 +234,7 @@ class RemoveWindow(QMainWindow):
 
     def closeEvent(self, QCloseEvent):
         self.parent.setmenuEnabled("menuClick", True)
-
+"""
 class SetLabelforAuto(QMainWindow):
     def __init__(self, parent=None):
         QMainWindow.__init__(self, parent)
@@ -281,3 +281,4 @@ class SetLabelforAuto(QMainWindow):
 
     def closeEvent(self, QCloseEvent):
         self.parent.setmenuEnabled("menuClick", True)
+"""
