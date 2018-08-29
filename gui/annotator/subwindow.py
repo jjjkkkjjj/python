@@ -68,6 +68,10 @@ class CutframeWindow(QMainWindow):
         self.parent.ynew = self.parent.ynew[self.cutmin:self.cutmax, :]
         self.parent.znew = self.parent.znew[self.cutmin:self.cutmax, :]
 
+        self.parent.xopt = self.parent.xopt[self.cutmin:self.cutmax, :]
+        self.parent.yopt = self.parent.yopt[self.cutmin:self.cutmax, :]
+        self.parent.zopt = self.parent.zopt[self.cutmin:self.cutmax, :]
+
         tmp_index_num = [np.sum(self.parent.x[i][self.parent.x[i] != 0]) for i in range(self.parent.frame_max)]
 
         self.parent.frame = np.argmax(tmp_index_num)

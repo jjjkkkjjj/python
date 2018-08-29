@@ -116,9 +116,14 @@ class LeftDockWidget(QWidget):
         self.radioorigin = QRadioButton("Original")
         vboxshowradio.addWidget(self.radioorigin)
 
+        self.radioauto = QRadioButton("Auto")
+        self.radioauto.toggled.connect(self.radioautoChanged)
+        vboxshowradio.addWidget(self.radioauto)
+
         self.radiolabeled = QRadioButton("Labeled")
         self.radiolabeled.toggled.connect(self.radiolabeledChanged)
         vboxshowradio.addWidget(self.radiolabeled)
+
         self.groupshowradio.setLayout(vboxshowradio)
         self.radioorigin.setChecked(True)
 
@@ -149,14 +154,14 @@ class LeftDockWidget(QWidget):
 
     # clicked set Label button
     def setLabel(self):
-        if self.radioorigin.isChecked():
+        if self.radioorigin.isChecked() or self.radioauto.isChecked():
             var = {}
             var["label"] = str(self.selectedcombobox.currentText())
             if self.radioUntilNan.isChecked():
                 var["init"] = int(self.spininit.text())
                 var["fin"] = int(self.spinfin.text())
                 var["interpolation"] = str(self.comboboxinterpolation.currentText())
-            self.parent.setLabel(var, self.radioUntilNan.isChecked())
+            self.parent.setLabel(var, self.radioUntilNan.isChecked(), self.radioauto.isChecked())
             self.parent.setFrameLabel()
         else:
             self.parent.deleteLabel()
@@ -190,6 +195,29 @@ class LeftDockWidget(QWidget):
             self.groupsetting.setEnabled(True)
 
     def radiolabeledChanged(self):
+        if self.radiolabeled.isChecked():
+            self.check_showbone.setEnabled(True)
+            self.selectedcombobox.setVisible(False)
+            self.labelinterpolation.setVisible(False)
+            self.comboboxinterpolation.setVisible(False)
+            self.radioUntilNan.setText("Select deleted frames")
+            self.button_setlabel.setText("Delete Label")
+        else:
+            self.check_showbone.setEnabled(False)
+            self.selectedcombobox.setVisible(True)
+            self.labelinterpolation.setVisible(True)
+            self.comboboxinterpolation.setVisible(True)
+            self.radioUntilNan.setText("Interpolate nan")
+            self.button_setlabel.setText("Set Label")
+
+        self.parent.now_select = -1
+        self.parent.setmenuEnabled("click", False)
+        self.parent.trajectory_line = None
+        self.groupAnnotator.setEnabled(False)
+        self.parent.draw(fix=True)
+
+
+    def radioautoChanged(self):
         if self.radiolabeled.isChecked():
             self.check_showbone.setEnabled(True)
             self.selectedcombobox.setVisible(False)
