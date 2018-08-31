@@ -1,4 +1,4 @@
-import sys, os, random
+import sys, os, random, re
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from c3d import Reader
@@ -19,10 +19,7 @@ import optimal_selector
 
 class Data:
     def __init__(self):
-        # configure
-        self.fps = 500
-        self.units = "mm"
-        self.searchRange = 80
+        self.configurePath = "./__config__/configure.conf"
 
         self.now_select = -1
         self.frame = 0
@@ -40,8 +37,32 @@ class Data:
                      [20, 23], [21, 24], [23, 24], [23, 25], [24, 25],
                      [3, 5], [3, 6], [5, 6]]
 
-        self.Threshold_optimal = 50 # mm
-        self.Threshold_Velocity = 50 # mm
+        # configure
+        self.fps = 500
+        self.units = "mm"
+        self.Threshold_optimal = 50  # mm
+        self.StandardJoint_autolabeling = "head"
+        self.DefaultTrcPath_autolabeling = "./IMAMURA01.trc"
+        self.StandardFrame_autolabeling = 218
+
+        self.lastopenedpath = "./"
+        self.lastsavedpath = "./"
+
+        if not os.path.isdir("__config__"):
+            os.mkdir("__config__")
+            with open(self.configurePath, "w") as f:
+                return
+        
+        with open(self.configurePath, "r") as f:
+            lines = f.readlines()
+            for line in lines:
+                tmp = line.split("\t")
+                method = tmp[0]
+                value = tmp[1]
+                typeOfValue = tmp[2]
+                #print "self.{0} = {2}({1})".format(method, value, typeOfValue)
+                exec ("self.{0} = {2}(\"{1}\")".format(method, value, typeOfValue))
+
         pass
 
     def read_from_csv(self, path):
@@ -401,6 +422,75 @@ class Data:
 
         self.xopt, self.yopt, self.zopt = xtmp, ytmp, ztmp
 
+    def auto_labelselect(self):
+        with open(self.DefaultTrcPath_autolabeling, 'r') as f:
+            data = np.genfromtxt(f, delimiter='\t', skip_header=6, missing_values=' ')
+            xStand = data[:, 2::3][self.StandardFrame_autolabeling, :]
+            yStand = data[:, 3::3][self.StandardFrame_autolabeling, :]
+            zStand = data[:, 4::3][self.StandardFrame_autolabeling, :]
+
+            jointindStand = self.Points.index(self.StandardJoint_autolabeling)
+
+            # correlated coordinates
+            xStand = xStand - xStand[jointindStand]
+            yStand = yStand - yStand[jointindStand]
+            zStand = zStand - zStand[jointindStand]
+
+            indicesStandtmp = np.where(~np.isnan(xStand))[0]
+            indicesStandtmp = indicesStandtmp[indicesStandtmp != jointindStand]
+
+
+            xCand = self.xopt[self.frame, :] - self.xopt[self.frame, self.now_select]
+            yCand = self.yopt[self.frame, :] - self.yopt[self.frame, self.now_select]
+            zCand = self.zopt[self.frame, :] - self.zopt[self.frame, self.now_select]
+
+            nonnannumlists = []
+            for i in range(self.xopt.shape[1]):
+                if i == self.now_select:
+                    nonnannumlists.append(0) # eliminate selected index
+                    continue
+                nonnannumlists.append(np.sum((self.xopt[:, i] != 0.0) & (self.yopt[:, i] != 0.0) & (self.zopt[:, i] != 0.0)))
+            nonnannumlists = np.argsort(nonnannumlists)[::-1][:indicesStandtmp.size]
+
+            if np.where(np.isnan(xCand))[0].size > 0:
+                return False
+
+
+
+            # set selected joint
+            self.xnew[:, jointindStand], self.ynew[:, jointindStand], self.znew[:, jointindStand] = \
+                self.xopt[:, self.now_select], self.yopt[:, self.now_select], self.zopt[:, self.now_select]
+
+            previousJoint = jointindStand
+            while indicesStandtmp.size > 0:
+                now_iSt = np.argmin((xStand[indicesStandtmp] - xStand[previousJoint])**2
+                                    + (yStand[indicesStandtmp] - yStand[previousJoint])**2
+                                    + (zStand[indicesStandtmp] - zStand[previousJoint])**2)
+
+                nearestPreviousJoint_StandIndex = indicesStandtmp[now_iSt]
+
+                candidate_nnnl = np.argmin((xCand[nonnannumlists] - xStand[nearestPreviousJoint_StandIndex])**2
+                                            + (yCand[nonnannumlists] - yStand[nearestPreviousJoint_StandIndex])**2
+                                            + (zCand[nonnannumlists] - zStand[nearestPreviousJoint_StandIndex])**2)
+
+                nearestJoint_OptIndex = nonnannumlists[candidate_nnnl]
+
+                # update
+                self.xnew[:, nearestPreviousJoint_StandIndex], self.ynew[:, nearestPreviousJoint_StandIndex], self.znew[:, nearestPreviousJoint_StandIndex] = \
+                    self.xopt[:, nearestJoint_OptIndex], self.yopt[:, nearestJoint_OptIndex], self.zopt[:, nearestJoint_OptIndex]
+
+                # delete now joint index
+                indicesStandtmp = np.delete(indicesStandtmp, now_iSt)
+
+                # delete candidate point
+                nonnannumlists = np.delete(nonnannumlists, candidate_nnnl)
+
+        nanIndices = np.where((self.xnew == 0.0) & (self.ynew == 0.0) & (self.znew == 0.0))
+        self.xnew[nanIndices], self.ynew[nanIndices], self.znew[nanIndices] = np.nan, np.nan, np.nan
+        self.setbone()
+
+        return True
+
 
 
 class Annotator(QMainWindow, Data):
@@ -531,12 +621,21 @@ class Annotator(QMainWindow, Data):
         self.add_actions(self.edit_menu, (self.removePoints_action,))
         self.removePoints_action.setEnabled(False)
 
+        # Automation
+        self.automation_menu = self.menuBar().addMenu("&Automation")
+
         self.autoselection_action = self.create_action("Optimal selection", slot=self.autoSelect, shortcut="Ctrl+Shift+A", tip="Auto selection")
-        self.add_actions(self.edit_menu, (self.autoselection_action,))
+        self.add_actions(self.automation_menu, (self.autoselection_action,))
         self.autoselection_action.setEnabled(False)
 
-        self.configuration_action = self.create_action("&Configuration", slot=self.configure, tip="Set configuration")
-        self.add_actions(self.edit_menu, (self.configuration_action,))
+        self.autolabeling_action = self.create_action("Auto-Labeling", slot=self.autoLabeling, shortcut="Ctrl+Shift+L", tip="Auto labeling")
+        self.add_actions(self.automation_menu, (self.autolabeling_action,))
+        self.autolabeling_action.setEnabled(False)
+        # Preference
+        self.preference_menu = self.menuBar().addMenu("&Preference")
+
+        self.configuration_action = self.create_action("&Configuration", slot=self.configure, shortcut="Ctrl+,", tip="Set configuration")
+        self.add_actions(self.preference_menu, (self.configuration_action,))
 
         # set
         self.set_menu = self.menuBar().addMenu("&Set")
@@ -584,7 +683,7 @@ class Annotator(QMainWindow, Data):
     def input_c3d_or_csvfile(self):
         filters = "CSV files(*.csv);;C3D files(*.c3d)"
         selected_filter = "C3D files(*.c3d)"
-        self.path = unicode(QFileDialog.getOpenFileName(self, 'load file', './data/c3d', filters, selected_filter))
+        self.path = unicode(QFileDialog.getOpenFileName(self, 'load file', self.lastopenedpath, filters, selected_filter))
         try:
             if self.path:
                 if self.path.split('/')[-1].split('.')[-1] in ['csv', 'CSV']:
@@ -592,6 +691,14 @@ class Annotator(QMainWindow, Data):
 
                 else:  # c3d
                     self.read_from_c3d(self.path)
+
+                self.lastopenedpath = ""
+                if os.name == 'nt': # windows
+                    for directory in self.path.split('\\')[:-1]:
+                        self.lastopenedpath += directory + "\\"
+                else:
+                    for directory in self.path.split('/')[:-1]:
+                        self.lastopenedpath += directory + "/"
 
             else:
                 msg = """You should select .csv file!"""
@@ -638,7 +745,12 @@ class Annotator(QMainWindow, Data):
         if self.filed:
             filters = "TRC files(*.trc)"
              #selected_filter = "CSV files(*.csv)"
-            savepath, extension = QFileDialog.getSaveFileNameAndFilter(self, 'Save file', './data/trc', filters)
+            if os.name == 'nt':
+                filename, __ = os.path.splitext(self.path.split('\\')[-1]) + '.trc'
+            else:
+                filename, __ = os.path.splitext(self.path.split('/')[-1]) + '.trc'
+
+            savepath, extension = QFileDialog.getSaveFileNameAndFilter(self, 'Save file', self.lastsavedpath + filename, filters)
 
             savepath = str(savepath).encode()
             extension = str(extension).encode()
@@ -802,8 +914,8 @@ class Annotator(QMainWindow, Data):
             else:
                 self.now_select = np.where(self.xnew[self.frame] == x0[ind])[0][0]
 
-            self.leftdockwidget.selectEnabled(True)
-            self.setmenuEnabled("onclick", True)
+            self.leftdockwidget.onclicked_Enabled(True)
+            #self.setmenuEnabled("click", True)
             self.setFrameLabel()
 
             if self.leftdockwidget.check_trajectory.isChecked():
@@ -946,9 +1058,19 @@ class Annotator(QMainWindow, Data):
         self.optimal_select()
 
         QMessageBox.information(self, "Auto Optimal Selection", "Finished!!!")
+        self.autolabeling_action.setEnabled(True)
         #setautolabeldialog = SetLabelforAuto(self)
         #self.setmenuEnabled("menuClick", False)
         #setautolabeldialog.show()
+
+    def autoLabeling(self):
+        if not self.leftdockwidget.radioauto.isChecked():
+            QMessageBox.warning(self, "Auto Labeling", "you must choose joint of Auto as standard")
+            return
+        if self.auto_labelselect():
+            QMessageBox.information(self, "Auto Labeling", "Finished!!!")
+        else:
+            QMessageBox.warning(self, "Auto Labeling", "Invalid frame due to lack of real values")
 
     ###
     # UI
@@ -1044,6 +1166,7 @@ class Annotator(QMainWindow, Data):
     def setmenuEnabled(self, EVENT, BOOL):
         if EVENT == "click":
             self.removePoints_action.setEnabled(BOOL)
+            #self.autolabeling_action.setEnabled(BOOL)
             #self.autoselection_action.setEnabled(BOOL)
         elif EVENT == "menuClick":
             self.leftdock.setEnabled(BOOL)
@@ -1051,7 +1174,21 @@ class Annotator(QMainWindow, Data):
             self.cutframe_action.setEnabled(BOOL)
             self.configuration_action.setEnabled(BOOL)
             self.removePoints_action.setEnabled(BOOL)
+            #self.autolabeling_action.setEnabled(BOOL)
             #self.autoselection_action.setEnabled(BOOL)
+
+    def closeEvent(self, QCloseEvent):
+        with open(self.configurePath, "w") as f:
+            f.write("fps\t{0}\tint\t\n".format(self.fps))
+            f.write("units\t{0}\tstr\t\n".format(self.units))
+            f.write("Threshold_optimal\t{0}\tfloat\t\n".format(self.Threshold_optimal))
+            f.write("StandardJoint_autolabeling\t{0}\tstr\t\n".format(self.StandardJoint_autolabeling))
+            f.write("DefaultTrcPath_autolabeling\t{0}\tstr\t\n".format(self.DefaultTrcPath_autolabeling))
+            f.write("StandardFrame_autolabeling\t{0}\tint\t\n".format(self.StandardFrame_autolabeling))
+
+            f.write("lastopenedpath\t{0}\tstr\t\n".format(self.lastopenedpath))
+            f.write("lastsavedpath\t{0}\tstr\t\n".format(self.lastsavedpath))
+
 
 print("activate qt4!")
 app = QApplication(sys.argv)

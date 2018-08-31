@@ -2,6 +2,7 @@ import sys, os, random
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 import numpy as np
+import csv
 
 class CutframeWindow(QMainWindow):
     def __init__(self, parent=None):
@@ -93,6 +94,9 @@ class CutframeWindow(QMainWindow):
     def clickedCancel(self):
         self.close()
 
+    def keyPressEvent(self, QKeyEvent):
+        if QKeyEvent.key() == Qt.Key_Return:
+            self.clickedOK()
 
     def closeEvent(self, QCloseEvent):
         self.parent.setmenuEnabled("menuClick", True)
@@ -106,7 +110,10 @@ class ConfigureWindow(QMainWindow):
     def initUI(self):
         self.main_widget = QWidget(self)
 
-        vbox = QVBoxLayout()
+        VBOX = QVBoxLayout()
+
+        self.groupBasicInfo = QGroupBox("Basic Info")
+        vboxBasicInfo = QVBoxLayout()
 
         hbox1 = QHBoxLayout()
         self.labelfps = QLabel(self)
@@ -118,7 +125,7 @@ class ConfigureWindow(QMainWindow):
         self.spinFps.setMaximum(10000)
         self.spinFps.setValue(self.parent.fps)
         hbox1.addWidget(self.spinFps)
-        vbox.addLayout(hbox1)
+        vboxBasicInfo.addLayout(hbox1)
 
         hbox2 = QHBoxLayout()
         self.labelUnits = QLabel(self)
@@ -131,46 +138,127 @@ class ConfigureWindow(QMainWindow):
         self.comboBoxUnits.setCurrentIndex(Units.index(self.parent.units))
         self.comboBoxUnits.currentIndexChanged.connect(self.unitsChanged)
         hbox2.addWidget(self.comboBoxUnits)
-        vbox.addLayout(hbox2)
+        vboxBasicInfo.addLayout(hbox2)
+
+        self.groupBasicInfo.setLayout(vboxBasicInfo)
+        VBOX.addWidget(self.groupBasicInfo)
+
+        self.groupOptimalSelection = QGroupBox("Optimal Selection")
+        vboxOptimalSelection = QVBoxLayout()
 
         hbox3 = QHBoxLayout()
         self.labelSearchRange = QLabel(self)
-        self.labelSearchRange.setText("Search Range({0})".format(self.parent.units))
+        self.labelSearchRange.setText("Threshold for optimal selection({0})".format(self.parent.units))
         hbox3.addWidget(self.labelSearchRange)
 
-        self.doublespinSearchRange = QDoubleSpinBox(self)
-        self.doublespinSearchRange.setMinimum(0)
-        self.doublespinSearchRange.setMaximum(1000)
-        self.doublespinSearchRange.setValue(self.parent.searchRange)
-        hbox3.addWidget(self.doublespinSearchRange)
-        vbox.addLayout(hbox3)
+        self.doublespin_Threshold_optimal = QDoubleSpinBox(self)
+        self.doublespin_Threshold_optimal.setMinimum(0)
+        self.doublespin_Threshold_optimal.setMaximum(1000)
+        self.doublespin_Threshold_optimal.setValue(self.parent.Threshold_optimal)
+        hbox3.addWidget(self.doublespin_Threshold_optimal)
+        vboxOptimalSelection.addLayout(hbox3)
+
+        self.groupOptimalSelection.setLayout(vboxOptimalSelection)
+        VBOX.addWidget(self.groupOptimalSelection)
+
+        self.groupAutolabeling = QGroupBox("Auto Labeling")
+        vboxAutolabeling = QVBoxLayout()
 
         hbox4 = QHBoxLayout()
+        self.labelStandardJoints = QLabel(self)
+        self.labelStandardJoints.setText("Standard Joint for auto-labeling")
+        hbox4.addWidget(self.labelStandardJoints)
+
+        self.comboBoxJoints = QComboBox(self)
+        self.comboBoxJoints.addItems(self.parent.Points)
+        self.comboBoxJoints.setCurrentIndex(self.parent.Points.index(self.parent.StandardJoint_autolabeling))
+        hbox4.addWidget(self.comboBoxJoints)
+        vboxAutolabeling.addLayout(hbox4)
+
+        labelPath = QLabel(self)
+        labelPath.setText("Path as standard:")
+        vboxAutolabeling.addWidget(labelPath)
+        self.labelDefaultTrcPath = QLabel(self)
+        self.labelDefaultTrcPath.setText(self.parent.DefaultTrcPath_autolabeling)
+        vboxAutolabeling.addWidget(self.labelDefaultTrcPath)
+        self.button_open = QPushButton("Open", self)
+        self.button_open.clicked.connect(self.clickedOpen)
+        vboxAutolabeling.addWidget(self.button_open)
+
+        hbox5 = QHBoxLayout()
+        self.labelStandardFrame = QLabel(self)
+        self.labelStandardFrame.setText("Standard Frame")
+        hbox5.addWidget(self.labelStandardFrame)
+
+        self.spinStandardFrame = QSpinBox(self)
+        self.spinStandardFrame.setMinimum(0)
+        self.spinStandardFrame.setMaximum(self.readTrc(self.parent.DefaultTrcPath_autolabeling))
+        self.spinStandardFrame.setValue(self.parent.StandardFrame_autolabeling)
+        hbox5.addWidget(self.spinStandardFrame)
+        vboxAutolabeling.addLayout(hbox5)
+
+        self.groupAutolabeling.setLayout(vboxAutolabeling)
+        VBOX.addWidget(self.groupAutolabeling)
+
+        hbox6 = QHBoxLayout()
         self.button_ok = QPushButton("OK", self)
         self.button_ok.clicked.connect(self.clickedOK)
-        hbox4.addWidget(self.button_ok)
+        hbox6.addWidget(self.button_ok)
 
         self.button_cancel = QPushButton("Cancel", self)
         self.button_cancel.clicked.connect(self.clickedCancel)
-        hbox4.addWidget(self.button_cancel)
-        vbox.addLayout(hbox4)
+        hbox6.addWidget(self.button_cancel)
+        VBOX.addLayout(hbox6)
 
-        self.main_widget.setLayout(vbox)
+        self.main_widget.setLayout(VBOX)
         self.setCentralWidget(self.main_widget)
 
     def unitsChanged(self):
         self.labelSearchRange.setText("Search Range({0})".format(str(self.comboBoxUnits.currentText())))
 
+    def clickedOpen(self):
+        filters = "TRC files(*.trc)"
+        path = unicode(QFileDialog.getOpenFileName(self, 'load file', './data/c3d', filters))
+
+        try:
+            if path:
+                self.labelDefaultTrcPath.setText(path)
+                maxFrame = self.readTrc(path)
+                self.spinStandardFrame.setMaximum(maxFrame)
+            else:
+                pass
+        except:
+            pass
+
+    def readTrc(self, path):
+        with open(path, 'r') as f:
+            reader = csv.reader(f, delimiter='\t')
+            next(reader)
+            next(reader)
+            next(reader)
+            next(reader)
+
+            data = np.genfromtxt(f, delimiter='\t', skip_header=6, missing_values=' ')
+            x = data[:, 2::3]
+            y = data[:, 3::3]
+            z = data[:, 4::3]
+            frame_max = x.shape[0]
+
+            return frame_max
+
     def clickedOK(self):
         self.parent.fps = int(self.spinFps.text())
         self.parent.units = str(self.comboBoxUnits.currentText())
-        self.parent.searchRange = float(self.doublespinSearchRange.text())
+        self.parent.Threshold_optimal = float(self.doublespin_Threshold_optimal.text())
 
         self.close()
 
     def clickedCancel(self):
         self.close()
 
+    def keyPressEvent(self, QKeyEvent):
+        if QKeyEvent.key() == Qt.Key_Return:
+            self.clickedOK()
 
 class RemoveWindow(QMainWindow):
     def __init__(self, parent=None):
@@ -235,6 +323,10 @@ class RemoveWindow(QMainWindow):
 
     def clickedCancel(self):
         self.close()
+
+    def keyPressEvent(self, QKeyEvent):
+        if QKeyEvent.key() == Qt.Key_Return:
+            self.clickedOK()
 
     def closeEvent(self, QCloseEvent):
         self.parent.setmenuEnabled("menuClick", True)

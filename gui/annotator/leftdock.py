@@ -148,7 +148,7 @@ class LeftDockWidget(QWidget):
     def release_select(self):
         self.parent.now_select = -1
         self.parent.trajectory_line = None
-        self.selectEnabled(False)
+        self.onclicked_Enabled(False)
         self.parent.setFrameLabel()
         self.parent.draw(fix=True)
 
@@ -183,7 +183,7 @@ class LeftDockWidget(QWidget):
             self.button_setlabel.setEnabled(True)
 
     # function for leaving off to change enabled
-    def selectEnabled(self, BOOL):
+    def onclicked_Enabled(self, BOOL):
         self.button_noselect.setEnabled(BOOL)
         self.groupAnnotator.setEnabled(BOOL)
         self.parent.setmenuEnabled("click", BOOL)
