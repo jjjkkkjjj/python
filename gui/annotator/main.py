@@ -43,7 +43,8 @@ class Data:
         self.Threshold_optimal = 50  # mm
         self.StandardJoint_autolabeling = "head"
         self.DefaultTrcPath_autolabeling = "./IMAMURA01.trc"
-        self.StandardFrame_autolabeling = 218
+        self.StandardFrame_autolabeling = -1
+        #self.StandardFrame_autolabeling = 218
 
         self.lastopenedpath = "./"
         self.lastsavedpath = "./"
@@ -52,7 +53,7 @@ class Data:
             os.mkdir("__config__")
             with open(self.configurePath, "w") as f:
                 return
-        
+
         with open(self.configurePath, "r") as f:
             lines = f.readlines()
             for line in lines:
@@ -1064,9 +1065,14 @@ class Annotator(QMainWindow, Data):
         #setautolabeldialog.show()
 
     def autoLabeling(self):
+        if self.StandardFrame_autolabeling == -1:
+            QMessageBox.warning(self, "Auto Labeling", "you must check preference(Ctrl+,)")
+            return
+
         if not self.leftdockwidget.radioauto.isChecked():
             QMessageBox.warning(self, "Auto Labeling", "you must choose joint of Auto as standard")
             return
+
         if self.auto_labelselect():
             QMessageBox.information(self, "Auto Labeling", "Finished!!!")
         else:

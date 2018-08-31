@@ -191,7 +191,7 @@ class ConfigureWindow(QMainWindow):
         hbox5.addWidget(self.labelStandardFrame)
 
         self.spinStandardFrame = QSpinBox(self)
-        self.spinStandardFrame.setMinimum(0)
+        self.spinStandardFrame.setMinimum(-1)
         self.spinStandardFrame.setMaximum(self.readTrc(self.parent.DefaultTrcPath_autolabeling))
         self.spinStandardFrame.setValue(self.parent.StandardFrame_autolabeling)
         hbox5.addWidget(self.spinStandardFrame)
@@ -231,25 +231,33 @@ class ConfigureWindow(QMainWindow):
             pass
 
     def readTrc(self, path):
-        with open(path, 'r') as f:
-            reader = csv.reader(f, delimiter='\t')
-            next(reader)
-            next(reader)
-            next(reader)
-            next(reader)
+        try:
+            with open(path, 'r') as f:
+                reader = csv.reader(f, delimiter='\t')
+                next(reader)
+                next(reader)
+                next(reader)
+                next(reader)
 
-            data = np.genfromtxt(f, delimiter='\t', skip_header=6, missing_values=' ')
-            x = data[:, 2::3]
-            y = data[:, 3::3]
-            z = data[:, 4::3]
-            frame_max = x.shape[0]
+                data = np.genfromtxt(f, delimiter='\t', skip_header=6, missing_values=' ')
+                x = data[:, 2::3]
+                y = data[:, 3::3]
+                z = data[:, 4::3]
+                frame_max = x.shape[0]
 
-            return frame_max
+                self.spinStandardFrame.setMinimum(0)
+                return frame_max
+        except:
+            return -1
 
     def clickedOK(self):
         self.parent.fps = int(self.spinFps.text())
         self.parent.units = str(self.comboBoxUnits.currentText())
         self.parent.Threshold_optimal = float(self.doublespin_Threshold_optimal.text())
+
+        self.parent.StandardJoint_autolabeling = str(self.comboBoxJoints.currentText())
+        self.parent.DefaultTrcPath_autolabeling = str(self.labelDefaultTrcPath.text())
+        self.parent.StandardFrame_autolabeling = int(self.spinStandardFrame.value())
 
         self.close()
 
