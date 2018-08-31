@@ -747,9 +747,11 @@ class Annotator(QMainWindow, Data):
             filters = "TRC files(*.trc)"
              #selected_filter = "CSV files(*.csv)"
             if os.name == 'nt':
-                filename, __ = os.path.splitext(self.path.split('\\')[-1]) + '.trc'
+                filename, __ = os.path.splitext(self.path.split('\\')[-1])
             else:
-                filename, __ = os.path.splitext(self.path.split('/')[-1]) + '.trc'
+                filename, __ = os.path.splitext(self.path.split('/')[-1])
+
+            filename += '.trc'
 
             savepath, extension = QFileDialog.getSaveFileNameAndFilter(self, 'Save file', self.lastsavedpath + filename, filters)
 
@@ -791,6 +793,13 @@ class Annotator(QMainWindow, Data):
                     data[:, 4::3] = self.znew
 
                     np.savetxt(f, data, delimiter='\t')
+
+                if os.name == 'nt': # windows
+                    for directory in savepath.split('\\')[:-1]:
+                        self.lastsavedpath += directory + "\\"
+                else:
+                    for directory in savepath.split('/')[:-1]:
+                        self.lastsavedpath += directory + "/"
 
                 QMessageBox.information(self, "Saved", "Saved to {0}".format(savepath))
 
